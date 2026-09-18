@@ -1,0 +1,20 @@
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# environments
+.venv/
+venv/
+env/
+
+# os cruft
+.DS_Store
+
+# generated data -- regenerate with data/make_dataset.py rather than committing it
+data/prices.csv
+
+# editor
+.vscode/
+.idea/
