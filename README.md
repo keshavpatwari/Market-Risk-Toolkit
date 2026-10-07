@@ -85,8 +85,7 @@ offsetting positions, worst-case scenario selection).
 
 ## A note on the data
 
-There's no live market data feed available in the environment this was
-built in, so `data/make_dataset.py` generates a synthetic 3-year daily price
+Synthetic data used so the project is reproducible without a data licence, so `data/make_dataset.py` generates a synthetic 3-year daily price
 history for a 5-asset book (an equity index, EURUSD, a rates future, crude,
 gold) using correlated Student-t shocks plus a short synthetic stress
 window — so the backtests actually see some breaches instead of a
