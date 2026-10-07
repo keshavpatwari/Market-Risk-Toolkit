@@ -5,8 +5,7 @@ A simplified implementation of the FRTB Standardized Approach,
 Sensitivities-Based Method (SBM), covering delta risk for three risk
 classes: GIRR, Equity, and FX.
 
-IMPORTANT SCOPE NOTE (say this out loud in an interview, it shows judgement
-rather than gaps): this is a teaching implementation. It does NOT include
+IMPORTANT SCOPE NOTE: This is a teaching implementation. It does NOT include
 vega/curvature risk, the Default Risk Charge, or the Residual Risk Add-On,
 and the risk weights/correlations below are illustrative values inspired by
 the BCBS framework, not pulled from a current regulatory rulebook. A real
