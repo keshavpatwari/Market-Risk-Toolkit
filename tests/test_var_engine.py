@@ -1,6 +1,6 @@
 """
 Basic sanity tests for var_engine.py. Not exhaustive -- just enough to catch
-a broken sign convention or a method that silently returns garbage.
+a broken sign convention
 """
 import os
 import sys
