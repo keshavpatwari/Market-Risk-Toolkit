@@ -1,15 +1,9 @@
 """
-Builds a synthetic daily price history for a small 5-asset portfolio so the
-rest of the project can run without a live market data feed.
+Builds a synthetic daily price history for a small 5-asset portfolio.
 
-Swap this out for a real pull later, e.g.:
-    import yfinance as yf
-    yf.download(["SPY","QQQ","EFA","TLT","GLD"], start="2019-01-01")
-
-Innovations are drawn from a Student-t distribution instead of a normal
-because equity/FX returns have fatter tails than a GBM model alone gives you,
-and that fat-tailedness is exactly the thing that trips up parametric VaR
-later on -- which is the point of the comparison.
+Innovations are drawn from a Student-t distribution instead of a normal distribution
+because equity/FX returns have fatter tails, and that fat-tailedness is exactly the 
+thing that trips up parametric VaR, which is the point of the comparison.
 """
 import numpy as np
 import pandas as pd
@@ -19,7 +13,7 @@ np.random.seed(7)
 ASSETS = ["SPX_IDX", "EURUSD", "UST_10Y_FUT", "WTI_CRUDE", "GOLD"]
 N_DAYS = 750  # ~3 trading years
 
-# rough annualized vol / drift assumptions per asset, nothing precise
+# rough annualized vol / drift assumptions per asset
 ANNUAL_VOL = {"SPX_IDX": 0.18, "EURUSD": 0.09, "UST_10Y_FUT": 0.07,
               "WTI_CRUDE": 0.32, "GOLD": 0.15}
 ANNUAL_DRIFT = {"SPX_IDX": 0.08, "EURUSD": 0.0, "UST_10Y_FUT": 0.02,
@@ -28,7 +22,7 @@ ANNUAL_DRIFT = {"SPX_IDX": 0.08, "EURUSD": 0.0, "UST_10Y_FUT": 0.02,
 START_PRICE = {"SPX_IDX": 4200, "EURUSD": 1.08, "UST_10Y_FUT": 112,
                "WTI_CRUDE": 78, "GOLD": 1950}
 
-# a rough correlation matrix, not calibrated to anything real, just plausible
+# a rough correlation matrix (not calibrated to anything real)
 CORR = np.array([
     [1.00,  0.15, -0.30,  0.25, -0.10],
     [0.15,  1.00,  0.05,  0.10,  0.20],
@@ -40,7 +34,7 @@ CORR = np.array([
 
 def build(n_days=N_DAYS, stress_block=True):
     dt = 1 / 252
-    dof = 5  # student-t degrees of freedom -> fat tails
+    dof = 5  # student-t degrees of freedom for fat tails
 
     L = np.linalg.cholesky(CORR)
     z = np.random.standard_t(dof, size=(n_days, len(ASSETS)))
