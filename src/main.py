@@ -24,7 +24,7 @@ from backtest import rolling_backtest, kupiec_pof_test, christoffersen_independe
 from frtb_calculator import FRTBSensitivity, risk_class_summary
 
 CONFIDENCE = 0.99
-PORTFOLIO_VALUE = 10_000_000  # $10mm notional, arbitrary but round
+PORTFOLIO_VALUE = 10_000_000  # $10mm notional
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "outputs")
 
 
@@ -43,7 +43,7 @@ def print_header(title):
 
 def run_var_section(returns):
     print_header("1-DAY 99% VaR & EXPECTED SHORTFALL -- FULL SAMPLE")
-    weights = np.array([0.35, 0.15, 0.20, 0.15, 0.15])  # equity-tilted book
+    weights = np.array([0.35, 0.15, 0.20, 0.15, 0.15]) 
     assert len(weights) == returns.shape[1]
 
     eng = VaREngine(returns, weights, PORTFOLIO_VALUE)
@@ -79,7 +79,7 @@ def run_backtest_section(returns, weights):
         if method == "historical":
             plot_backtest(bt, method)
 
-    return bt  # last one (monte_carlo) returned for convenience, not used further
+    return bt  
 
 
 def plot_backtest(bt, method):
