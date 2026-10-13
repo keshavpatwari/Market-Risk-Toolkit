@@ -1,6 +1,4 @@
 """
-backtest.py
-
 Runs a rolling VaR backtest: for each day, compute VaR using only data up to
 that point (no lookahead), then check whether the next day's actual loss
 breached it. Then run the two standard statistical tests on the breach
@@ -8,7 +6,6 @@ sequence:
 
   - Kupiec POF test: are there the RIGHT NUMBER of breaches?
   - Christoffersen independence test: are the breaches CLUSTERED in time
-    (which would suggest the model reacts too slowly to changing vol)?
 
 Basel traffic light zones are also applied as a sanity check most risk teams
 still quote informally even though FRTB has moved capital treatment on.
@@ -39,7 +36,7 @@ def rolling_backtest(returns: pd.DataFrame, weights: np.ndarray, portfolio_value
         elif method == "parametric":
             v = eng.parametric_var(confidence)
         elif method == "monte_carlo":
-            v = eng.monte_carlo_var(confidence, n_sims=5000)  # smaller n for speed in a loop
+            v = eng.monte_carlo_var(confidence, n_sims=5000) 
         else:
             raise ValueError(method)
         var_series[t] = v
@@ -59,7 +56,6 @@ def kupiec_pof_test(breaches: pd.Series, confidence=0.99):
     p_hat = x / n
 
     if x == 0:
-        # avoid log(0); LR still well-defined in the limit
         lr = -2 * n * np.log(1 - p)
     else:
         ll_null = (n - x) * np.log(1 - p) + x * np.log(p)
