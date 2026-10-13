@@ -4,7 +4,7 @@ var_engine.py
 Three ways of getting to the same number: 1-day VaR and Expected Shortfall
 for a portfolio. The point of building all three side by side is that they
 agree in calm markets and disagree in exactly the way the FRM curriculum
-predicts once the return distribution gets fat-tailed / non-normal.
+predicts once the return distribution gets fat-tailed
 
   1. Historical Simulation  - no distribution assumption, just resample the past
   2. Parametric (Var-Cov)   - assumes normal returns, closed form, fast, blind to tails
@@ -66,7 +66,7 @@ class VaREngine:
     # ---------- Monte Carlo (fits a Student-t so it at least captures kurtosis) ----------
     def monte_carlo_var(self, confidence=0.99, n_sims=50000, window=None, seed=42):
         rets = self.port_returns if window is None else self.port_returns[-window:]
-        # fit a student-t rather than assuming normal -- cheap way to get fatter tails
+        # fit a student-t rather than assuming normal -- (Purpose is to get fatter tails)
         dof, loc, scale = stats.t.fit(rets)
         rng = np.random.default_rng(seed)
         sims = stats.t.rvs(dof, loc=loc, scale=scale, size=n_sims, random_state=rng)
