@@ -5,7 +5,7 @@ A simplified implementation of the FRTB Standardized Approach,
 Sensitivities-Based Method (SBM), covering delta risk for three risk
 classes: GIRR, Equity, and FX.
 
-IMPORTANT SCOPE NOTE: This is a teaching implementation. It does NOT include
+IMPORTANT SCOPE NOTE: This is a learning implementation. It does NOT include
 vega/curvature risk, the Default Risk Charge, or the Residual Risk Add-On,
 and the risk weights/correlations below are illustrative values inspired by
 the BCBS framework, not pulled from a current regulatory rulebook. A real
@@ -13,9 +13,8 @@ implementation would source risk weights and correlation parameters from the
 latest local regulator's technical standards.
 
 Mechanics implemented, which ARE the actual FRTB logic:
-  1. Weighted sensitivity WS_k = risk_weight_k * sensitivity_k
-  2. Intra-bucket aggregation:
-       K_b = sqrt( sum(WS_k^2) + sum_{k != l} rho_kl * WS_k * WS_l )
+  1. Weighted sensitivity = risk_weight * sensitivity
+  2. Intra-bucket aggregation: K_b = sqrt( sum(WS_k^2) + sum_{k != l} rho_kl * WS_k * WS_l )
   3. Cross-bucket aggregation using bucket correlation gamma_bc
   4. Three correlation scenarios (low / medium / high) -- final capital
      charge for a risk class is the WORST (max) of the three
@@ -29,7 +28,7 @@ class FRTBSensitivity:
         self.risk_class = risk_class
         self.bucket = bucket
         self.factor = factor
-        self.sensitivity = sensitivity  # e.g. PV impact of a 1bp / 1% move
+        self.sensitivity = sensitivity  
         self.risk_weight = risk_weight
         self.ws = sensitivity * risk_weight
 
